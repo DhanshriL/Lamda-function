@@ -1,0 +1,61 @@
+import boto3
+
+# we need to create api key and secret key in our client account
+# region will default for mumbai ap-south-1 (as per shiva sir said thre are two, check which one we need to add)
+# created and added arn number here of role role_arn
+
+aws_access_key = 'Akabcdexckjklsdfklsjf'
+aws_secret_key = '5Ddlsfjlaksdjfkldsjfklsdjfklsdjfpweelwwjdf'
+region = 'ap-south-1'
+
+# The ARN of the IAM role with necessary Lambda execution permissions
+role_arn = 'arn:aws:iam::9750500845645:role/for_zip'
+# File name of the Lambda .zip file
+zip_file_name = 'zipcode.zip'
+
+# Lambda function details
+function_name = 'my_lambda_function'
+handler = 'zipcode.lambda_handler'
+runtime = 'python3.9'
+
+# Create a Boto3 session with your credentials
+session = boto3.Session(
+    aws_access_key_id=aws_access_key,
+    aws_secret_access_key=aws_secret_key,
+    region_name=region
+)
+
+lambda_client = session.client('lambda')
+
+with open(zip_file_name, 'rb') as zip_file:
+    zip_content = zip_file.read()
+
+# Creation of the Lambda function
+try:
+    response = lambda_client.create_function(
+        FunctionName=function_name,
+        Runtime=runtime,
+        Role=role_arn,
+        Handler=handler,
+        Code={'ZipFile': zip_content},
+        Description='My Lambda function created from Boto3',
+        Timeout=15,
+        MemorySize=128,
+        Publish=True
+    )
+    print("Lambda function created successfully!")
+    print(response)
+
+except lambda_client.exceptions.ResourceConflictException:
+    # If the function already exists, update it to us example: if have same name with already function in our account
+    print("Lambda function already exists, updating it...")
+    response = lambda_client.update_function_code(
+        FunctionName=function_name,
+        ZipFile=zip_content,
+        Publish=True
+    )
+    print("Lambda function updated successfully!")
+    print(response)
+
+except Exception as e:
+    print(f"Error: {e}")
