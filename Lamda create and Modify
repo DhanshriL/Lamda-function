@@ -1,7 +1,7 @@
 import boto3
 
 # we need to create api key and secret key in our client account
-# region will default for mumbai ap-south-1 (as per shiva sir said thre are two, check which one we need to add)
+# region will default for mumbai ap-south-1 ( check which one we need to add)
 # created and added arn number here of role role_arn
 
 aws_access_key = 'Akabcdexckjklsdfklsjf'
