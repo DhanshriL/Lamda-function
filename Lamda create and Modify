@@ -1,11 +1,7 @@
 import boto3
 
-# we need to create api key and secret key in our client account
-# region will default for mumbai ap-south-1 ( check which one we need to add)
-# created and added arn number here of role role_arn
-
-aws_access_key = 'Akabcdexckjklsdfklsjf'
-aws_secret_key = '5Ddlsfjlaksdjfkldsjfklsdjfklsdjfpweelwwjdf'
+aws_access_key = 'Akabcdexckjklsdsdfdsfsjf'
+aws_secret_key = '5Ddlsfjlaksdjfkldsddfsdfdsfkjfpweelwwjdf'
 region = 'ap-south-1'
 
 # The ARN of the IAM role with necessary Lambda execution permissions
